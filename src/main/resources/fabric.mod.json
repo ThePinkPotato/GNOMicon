@@ -3,15 +3,15 @@
 	"id": "gnomicon",
 	"version": "${version}",
 	"name": "GNOMicon",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Do you hate GNOME? So do I! This mod adds an icon for Minecraft to the dash",
 	"authors": [
-		"Me!"
+		"Haxalotl"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/project/gnomicon",
+		"sources": "https://github.com/ThePinkPotato/Gnomicon"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/gnomicon/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -20,7 +20,7 @@
 		]
 	},
 	"mixins": [
-		"gnomicon.mixins.json"
+
 	],
 	"depends": {
 		"fabricloader": ">=0.19.3",
