@@ -2,6 +2,8 @@ package dev.haxalotl.gnomicon;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.Identifier;
 
@@ -10,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 
 public class GNOMicon implements ModInitializer {
@@ -37,24 +41,34 @@ public class GNOMicon implements ModInitializer {
 			String desktopFilename = "gnomicon-minecraft-" + SharedConstants.getGameVersion().getName().replace('.', '_') + ".desktop";
 			Path desktopPath = Path.of(System.getProperty("user.home") + "/.local/share/applications/" + desktopFilename);
 
+
+
 			if (getGnome.toUpperCase().contains("GNOME")) {
 				System.out.println("GNOME version: " + getGnome);
 				System.out.println("Minecraft* "+ SharedConstants.getGameVersion().getName());
 
+				if (Files.notExists(Path.of(FabricLoader.getInstance().getConfigDir() + "/icon.png"))) {
+					Files.copy(FabricLoader.getInstance().getModContainer("gnomicon").orElseThrow().findPath("assets/gnomicon/icon.png").orElseThrow(), Path.of(FabricLoader.getInstance().getConfigDir() + "/icon.png"));
+				}
+
 				if (Files.notExists(desktopPath)) {
 					System.out.println("locked and loaded");
+
+					System.out.println(FabricLoader.getInstance().getConfigDir());
 
 					Files.createFile(desktopPath);
 					Files.writeString(desktopPath,
 							"#!/usr/bin/env xdg-open\n\n" +
 							"[Desktop Entry]\n" +
-							"Icon:" + "" + "\n" +
+							"Type=Application\n" +
+							"Icon=" + FabricLoader.getInstance().getConfigDir().toString() + "/icon.png" + "\n" +
 							"StartupWMClass=" + "Minecraft* " + SharedConstants.getGameVersion().getName()
 					);
 				}
 			} else {
 				LOGGER.info("Your computer is probably using KDE");
 			}
+
 
         } catch (Exception e) {
             e.printStackTrace();
