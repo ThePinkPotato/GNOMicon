@@ -1,9 +1,9 @@
 package dev.haxalotl.gnomicon;
 
+
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.Identifier;
 
@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Optional;
+
 
 
 public class GNOMicon implements ModInitializer {
@@ -23,6 +22,9 @@ public class GNOMicon implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static boolean loaded = true;
+
+	public static final GNOMiconConfig config = new GNOMiconConfig();
 
 	@Override
 	public void onInitialize() {
@@ -31,6 +33,9 @@ public class GNOMicon implements ModInitializer {
         // Proceed with mild caution.
 
         LOGGER.info("GNOME is gonna give me an aneurysm");
+		loaded = true;
+
+		config.createConfig();
 
 		// Please ignore all the System.out.println, it's for debugging because I'm quite dense
         try {
@@ -47,10 +52,6 @@ public class GNOMicon implements ModInitializer {
 				System.out.println("GNOME version: " + getGnome);
 				System.out.println("Minecraft* "+ SharedConstants.getGameVersion().getName());
 
-				if (Files.notExists(Path.of(FabricLoader.getInstance().getConfigDir() + "/icon.png"))) {
-					Files.copy(FabricLoader.getInstance().getModContainer("gnomicon").orElseThrow().findPath("assets/gnomicon/icon.png").orElseThrow(), Path.of(FabricLoader.getInstance().getConfigDir() + "/icon.png"));
-				}
-
 				if (Files.notExists(desktopPath)) {
 					System.out.println("locked and loaded");
 
@@ -61,7 +62,7 @@ public class GNOMicon implements ModInitializer {
 							"#!/usr/bin/env xdg-open\n\n" +
 							"[Desktop Entry]\n" +
 							"Type=Application\n" +
-							"Icon=" + FabricLoader.getInstance().getConfigDir().toString() + "/icon.png" + "\n" +
+							"Icon=" + FabricLoader.getInstance().getConfigDir().toString() + "/gnomicon/icon.png" + "\n" +
 							"StartupWMClass=" + "Minecraft* " + SharedConstants.getGameVersion().getName()
 					);
 				}
