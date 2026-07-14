@@ -3,7 +3,6 @@ package dev.haxalotl.gnomicon;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.fabricmc.loader.api.FabricLoader;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -44,7 +43,6 @@ public class GNOMiconConfig {
     }
 
     public void readConfig() {
-
         try {
             configString = String.join(" ", Files.readAllLines(Path.of(FabricLoader.getInstance().getConfigDir() + "/gnomicon/gnomicon.json")));
         } catch (Exception e) {

@@ -10,8 +10,8 @@ import java.nio.file.Path;
 
 public class GNOMicon implements ModInitializer {
 	public static final String MOD_ID = "gnomicon";
-	public static final GNOMiconConfig config = new GNOMiconConfig();
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final GNOMiconConfig config = new GNOMiconConfig();
 
 	@Override
 	public void onInitialize() {
@@ -44,7 +44,6 @@ public class GNOMicon implements ModInitializer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 	public static Identifier id(String path) {
